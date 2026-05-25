@@ -79,7 +79,8 @@ function mostrarTarefas(){
         let prioridade = tarefa.prioridade || 'baixa';
         
         lista.innerHTML += `
-            <li>
+
+            <li id="tarefa-${index}">
              <span class="tag ${prioridade}">
                 ${prioridade[0].toUpperCase() + prioridade.slice(1)}
              </span>
@@ -130,17 +131,24 @@ function excluirTarefa(index){
 
 }
 
-function editarTarefa(index){
+function salvarEdiçao(index){
 
     let tarefas = JSON.parse(localStorage.getItem(chave)) || [];
 
-    let novaTarefa = prompt('Editar tarefa: ', tarefas[index].titulo);
+    let editar = document.querySelector('.input-ediçao');
 
-    if(novaTarefa === null) {
+    let novaTarefa = editar.value;
+
+    //aqui era necessário com o prompt pq poderia voltar um valor null.
+    /*if(novaTarefa === null) {
         return;
-    };
+    };*/
 
     //textoTarefa = textoTarefa[0].toUpperCase() + textoTarefa.slice(1);
+
+    if(novaTarefa === ''){
+        return;
+    }
 
     novaTarefa = novaTarefa.trim();
     novaTarefa = novaTarefa[0].toUpperCase() + novaTarefa.slice(1);
@@ -150,6 +158,18 @@ function editarTarefa(index){
     localStorage.setItem(chave, JSON.stringify(tarefas));
 
     mostrarTarefas();
+
+}
+
+function editarTarefa(index){
+
+    let tarefas = JSON.parse(localStorage.getItem(chave)) || [];
+
+    let li = document.querySelector(`#tarefa-${index}`);
+
+    li.innerHTML =  `<input class="input-ediçao" type="text" value="${tarefas[index].titulo}">
+                    <button onclick="salvarEdiçao(${index})"> Salvar </button>
+                    ` ;
 }
 
 mostrarTarefas();
