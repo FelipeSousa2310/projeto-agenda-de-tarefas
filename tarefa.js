@@ -168,7 +168,7 @@ function editarTarefa(index){
     let li = document.querySelector(`#tarefa-${index}`);
 
     li.innerHTML =  `<input class="input-ediçao" type="text" value="${tarefas[index].titulo}">
-                    <button onclick="salvarEdiçao(${index})"> Salvar </button>
+                    <button class="botao-ediçao" onclick="salvarEdiçao(${index})"> Salvar </button>
                     ` ;
 }
 
